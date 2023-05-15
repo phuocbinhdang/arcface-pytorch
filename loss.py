@@ -14,7 +14,7 @@ class ArcFaceLoss(nn.Module):
         nn.init.xavier_normal_(self.W)
         
     def forward(self, embeddings, labels):
-        cosine = self.get_cosine(embeddings)
+        cosine = self.get_cosine(embeddings) 
         onehot = self.onehot_encoding(labels)
         cosine_of_target_classes = cosine[onehot == 1]
         modified_cosine_of_target_classes = self.modify_cosine_of_target_classes(cosine_of_target_classes)
@@ -22,22 +22,26 @@ class ArcFaceLoss(nn.Module):
         logits = cosine + onehot * diff
         logits = self.scale * logits
         loss = F.cross_entropy(logits, labels)
+        
         return logits, loss
         
     def get_cosine(self, embeddings):
         normalized_embeddings = F.normalize(embeddings)
         normalized_W = F.normalize(self.W)
         cosine = F.linear(normalized_embeddings, normalized_W)
+        
         return cosine
     
     def onehot_encoding(self, labels):
         batch_size = labels.shape[0]
         onehot = torch.zeros(batch_size, self.num_classes, device=labels.device)
         onehot.scatter_(1, labels.unsqueeze(-1), 1)
+        
         return onehot
     
     def modify_cosine_of_target_classes(self, cosine_of_target_classes):
         eps = 1e-6
         angles = torch.acos(torch.clamp(cosine_of_target_classes, -1 + eps, 1 - eps))
+        
         return torch.cos(angles + self.margin)
         

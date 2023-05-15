@@ -86,7 +86,7 @@ def train(args):
             valid_loss /= len(valid_dataloader)
             valid_accuracy /= len(valid_dataloader)
         
-        print(f'epoch {Epoch + 1}/{args.epochs} \
+        print(f'epoch {epoch + 1}/{args.epochs} \
               - loss: {train_loss: .4f} - acc: {train_accuracy: .4f} \
               - val_loss: {valid_loss: .4f} - val_acc: {valid_accuracy: .4f}')
         
