@@ -12,15 +12,15 @@ from utils.dataloaders import create_dataloader
 from utils.device import select_device
 
 def train(args):
-    num_workers = os.cpu_count() if args.num_workers == -1 else args.num_workers
+    args.num_workers = os.cpu_count() if args.num_workers == -1 else args.num_workers
     
     args.image_size = (args.image_size, args.image_size) if isinstance(args.image_size, int) else args.image_size
     
     train_dir = os.path.join(args.data, 'train')
-    train_dataloader, train_datasets = create_dataloader(train_dir, args.image_size, args.batch_size, num_workers)
+    train_dataloader, train_datasets = create_dataloader(train_dir, args.image_size, args.batch_size, args.num_workers)
     
     valid_dir = os.path.join(args.data, 'valid')
-    valid_dataloader, _ = create_dataloader(valid_dir, args.image_size, args.batch_size, num_workers)
+    valid_dataloader, _ = create_dataloader(valid_dir, args.image_size, args.batch_size, args.num_workers)
     
     device = select_device(args.device)
     
@@ -59,7 +59,7 @@ def train(args):
             loss.backward()
             optimizer.step()
             
-            accuracy = torch.sum(logits.argmax(dim=1) == y)
+            accuracy = torch.sum(logits.argmax(dim=1) == y) / len(y)
             train_accuracy += accuracy.item()
             
         train_loss /= len(train_dataloader)
@@ -80,7 +80,7 @@ def train(args):
                 
                 valid_loss += loss.item()
 
-                accuracy = torch.sum(logits.argmax(dim=1) == y)
+                accuracy = torch.sum(logits.argmax(dim=1) == y) / len(y)
                 valid_accuracy += accuracy.item()
                 
             valid_loss /= len(valid_dataloader)
@@ -96,7 +96,7 @@ def parse_opt():
     
     parser.add_argument('--data', type=str, default='data')
     parser.add_argument('--batch-size', type=int, default=8)
-    parser.add_argument('--image-size', type=int, nargs='+', default=300)
+    parser.add_argument('--image-size', type=int, nargs='+', default=224)
     parser.add_argument('--num-workers', type=int, default=-1)
     
     parser.add_argument('--embedding-size', type=int, default=512)
