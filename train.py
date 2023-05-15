@@ -1,5 +1,6 @@
 import os
 import argparse
+from tqdm import tqdm
 
 import torch
 import torch.nn as nn
@@ -85,7 +86,7 @@ def train(args):
         valid_loss /= len(valid_dataloader)
         valid_accuracy /= len(valid_dataloader)
         
-        print(f'Epoch: {epoch} - loss: {train_loss} - acc: {train_accuracy} - val_loss: {valid_loss} - val_acc: {valid_accuracy}')
+        print(f'epoch {Epoch + 1}/{args.epochs} - loss: {train_loss} - acc: {train_accuracy} - val_loss: {valid_loss} - val_acc: {valid_accuracy}')
         
         
 def parse_opt():
