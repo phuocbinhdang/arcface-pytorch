@@ -86,15 +86,13 @@ def train(args):
             valid_loss /= len(valid_dataloader)
             valid_accuracy /= len(valid_dataloader)
         
-        print(f'epoch {epoch + 1}/{args.epochs} \
-              - loss: {train_loss: .4f} - acc: {train_accuracy: .4f} \
-              - val_loss: {valid_loss: .4f} - val_acc: {valid_accuracy: .4f}')
+        print(f'epoch {epoch + 1}/{args.epochs} - loss: {train_loss: .4f} - acc: {train_accuracy: .4f} - val_loss: {valid_loss: .4f} - val_acc: {valid_accuracy: .4f}')
         
         
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=3)
-    parser.add_argument('--learning-rate', '--lr', type=float, default=1e-4)
+    parser.add_argument('--learning-rate', '--lr', type=float, default=1e-3)
     
     parser.add_argument('--data', type=str, default='data')
     parser.add_argument('--batch-size', type=int, default=8)
