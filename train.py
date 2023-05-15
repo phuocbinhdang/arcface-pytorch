@@ -83,10 +83,12 @@ def train(args):
                 accuracy = torch.sum(logits.argmax(dim=1) == y)
                 valid_accuracy += accuracy.item()
                 
-        valid_loss /= len(valid_dataloader)
-        valid_accuracy /= len(valid_dataloader)
+            valid_loss /= len(valid_dataloader)
+            valid_accuracy /= len(valid_dataloader)
         
-        print(f'epoch {Epoch + 1}/{args.epochs} - loss: {train_loss} - acc: {train_accuracy} - val_loss: {valid_loss} - val_acc: {valid_accuracy}')
+        print(f'epoch {Epoch + 1}/{args.epochs} \
+              - loss: {train_loss: .4f} - acc: {train_accuracy: .4f} \
+              - val_loss: {valid_loss: .4f} - val_acc: {valid_accuracy: .4f}')
         
         
 def parse_opt():
