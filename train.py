@@ -1,3 +1,7 @@
+# When i started to write this code
+# Only 2 guys can understand (I and God)
+# Now there's only 1 left (God)
+
 import os
 import argparse
 
