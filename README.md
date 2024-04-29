@@ -11,7 +11,6 @@ This repo focus implement the paper with Pytorch [ArcFace: Additive Angular Marg
 <summary>Install</summary>
 
 ```bash
-git clone https://github.com/phuocdangday/arcface-pytorch  # clone
 cd arcface-pytorch
 pip install -r requirements.txt  # install requirements
 ```
